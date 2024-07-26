@@ -254,3 +254,63 @@ The primary purpose of this guide is to facilitate the simulation of naval signa
 
 **Disclaimer**
 This guide is based on NATO Unclassified material (ATP-01, Vol. II) and is intended for educational purposes only.
+2024-07-26 13:05:34,411 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 13:06:32,386 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 13:10:31,010 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 13:11:22,897 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 13:11:22,975 - INFO - User Query: start simulation
+2024-07-26 13:11:22,975 - INFO - Response: Simulation started.
+
+You are currently in the Naval Signal Simulation, which is a detailed guide for naval communication. The simulation provides a comprehensive understanding of naval signal flags, including their meanings, uses, and combinations.
+
+Please enter a command to continue the simulation. You can use the following options:
+
+1. Enter a signal flag sequence to decode its meaning.
+2. Ask about a specific signal flag or combination.
+3. Practice decoding signals by entering a new sequence.
+4. Quit the simulation.
+
+Enter your command:
+2024-07-26 13:11:32,600 - INFO - User Feedback: yes
+2024-07-26 13:21:22,465 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 13:21:22,502 - INFO - User Query: 4
+2024-07-26 13:21:22,503 - INFO - Response: **Detailed Guide for AI Model: Naval Signal Simulation**
+
+The purpose of this guide is to outline the standardized naval signal simulation system used by NATO (North Atlantic Treaty Organization). This system aims to provide a clear and concise means of communication between naval vessels, aircraft, and shore-based stations.
+
+**Signal Description**
+The system uses a combination of written pennants, numerical pennants, and spoken signals to convey various messages. The main categories include:
+
+1. **Tactical Signals**: These signals are used for real-time communication between naval vessels and aircraft.
+2. **Information Signals**: These signals provide information related to navigation, weather, and other general purposes.
+
+**Signal Syntax**
+
+The signal syntax consists of a combination of the following elements:
+
+1. **Numerical Pennants**: Used to convey specific messages or instructions (e.g., "Turn 6-4").
+2. **Spoken Signals**: Verbal messages used to clarify or confirm written signals.
+3. **Special Flags**: Unique flags used for special purposes, such as signaling an emergency.
+
+**Signal Examples**
+
+Some examples of naval signal simulations include:
+
+1. "Leave harbor zero time" (Numerical Pennant 18-6)
+2. "Zigzag (ging) alter course wheeling resume zigzag" (Spoken Signal)
+3. "Cease zigzagging remain course steered" (Numerical Pennant 36-27)
+
+**Signal Index**
+
+The signal index provides a comprehensive list of all naval signals, categorized by topic and sequence number. This includes:
+
+1. Tactical Signals
+2. Information Signals
+
+**Lep-1 Edition (G) Version (1) NATO Unclassified**
+
+This edition is the official version of the naval signal simulation system, providing detailed descriptions of each signal.
+
+**Conclusion**
+The Naval Signal Simulation system is a standardized means of communication used by NATO member countries to facilitate clear and efficient transmission of information between naval vessels, aircraft, and shore-based stations. This guide provides a comprehensive overview of the signal syntax, examples, and index, serving as a valuable resource for AI models and human operators alike.
+2024-07-26 13:21:47,532 - INFO - User Feedback: no

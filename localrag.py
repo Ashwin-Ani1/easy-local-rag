@@ -13,6 +13,8 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from tkinter import Tk, Button, filedialog
 import PyPDF2
+import asyncio
+import aiofiles
 from concurrent.futures import ThreadPoolExecutor
 
 # Disable parallelism in tokenizers to avoid warnings and potential deadlocks
@@ -34,11 +36,11 @@ logging.basicConfig(level=logging.INFO, filename='rag_system.log', filemode='a',
                     format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Load advanced embedding model
-embedding_model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+embedding_model = SentenceTransformer('paraphrase-MiniLM-L6-v2', device='cuda' if torch.cuda.is_available() else 'cpu')
 
 # Load T5 model and tokenizer for query rewriting
 t5_tokenizer = T5Tokenizer.from_pretrained('t5-small')
-t5_model = T5ForConditionalGeneration.from_pretrained('t5-small')
+t5_model = T5ForConditionalGeneration.from_pretrained('t5-small').to('cuda' if torch.cuda.is_available() else 'cpu')
 
 # Function to preprocess text and split into chunks
 def preprocess_text(text):
@@ -49,19 +51,19 @@ def preprocess_text(text):
     words = [lemmatizer.lemmatize(word) for word in words if word not in stop_words]
     return ' '.join(words)
 
-# Function to load and preprocess vault content
-def load_vault_content(filepath):
-    with open(filepath, 'r', encoding='utf-8') as file:
-        content = file.read()
+# Asynchronous function to load and preprocess vault content
+async def load_vault_content(filepath):
+    async with aiofiles.open(filepath, 'r', encoding='utf-8') as file:
+        content = await file.read()
     return preprocess_text(content).split("\n")  # Split by lines to treat each line as a document
 
-# Function to create FAISS index with parallel processing
-def create_faiss_index(docs):
-    with ThreadPoolExecutor() as executor:
-        embeddings = list(executor.map(lambda doc: embedding_model.encode(doc, convert_to_tensor=True), docs))
-    embeddings = torch.stack(embeddings)
-    if len(embeddings.shape) == 1:  # Handle single document scenario
-        embeddings = embeddings.unsqueeze(0)
+# Function to create FAISS index with parallel processing and batch encoding
+def create_faiss_index(docs, batch_size=64):
+    embeddings = []
+    for i in range(0, len(docs), batch_size):
+        batch_embeddings = embedding_model.encode(docs[i:i + batch_size], convert_to_tensor=True)
+        embeddings.append(batch_embeddings)
+    embeddings = torch.cat(embeddings)
     index = faiss.IndexFlatL2(embeddings.shape[1])
     index.add(embeddings.cpu().numpy())
     return index, embeddings
@@ -78,7 +80,7 @@ def rewrite_query(user_input_json, conversation_history):
     user_input = json.loads(user_input_json)["Query"]
     context = "\n".join([f"{msg['role']}: {msg['content']}" for msg in conversation_history[-2:]])
     input_text = f"rewrite: {user_input} context: {context}"
-    input_ids = t5_tokenizer.encode(input_text, return_tensors='pt')
+    input_ids = t5_tokenizer.encode(input_text, return_tensors='pt').to('cuda' if torch.cuda.is_available() else 'cpu')
     outputs = t5_model.generate(input_ids, max_length=100, num_return_sequences=1)
     rewritten_query = t5_tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
     return json.dumps({"Rewritten Query": rewritten_query})
@@ -170,7 +172,7 @@ client = OpenAI(
 
 # Load the vault content
 print(NEON_GREEN + "Loading vault content..." + RESET_COLOR)
-vault_content = load_vault_content("vault.txt")
+vault_content = asyncio.run(load_vault_content("vault.txt"))
 
 # Check if vault_content is empty
 if not vault_content:
@@ -249,10 +251,10 @@ while True:
     get_user_feedback()
 
 # Functions for uploading PDF, TXT, and JSON files
-def convert_pdf_to_text():
+async def convert_pdf_to_text():
     file_path = filedialog.askopenfilename(filetypes=[("PDF Files", "*.pdf")])
     if file_path:
-        with open(file_path, 'rb') as pdf_file:
+        async with aiofiles.open(file_path, 'rb') as pdf_file:
             pdf_reader = PyPDF2.PdfReader(pdf_file)
             num_pages = len(pdf_reader.pages)
             text = ''
@@ -276,16 +278,16 @@ def convert_pdf_to_text():
                     current_chunk = sentence + " "
             if current_chunk:
                 chunks.append(current_chunk)
-            with open("vault.txt", "a", encoding="utf-8") as vault_file:
+            async with aiofiles.open("vault.txt", "a", encoding="utf-8") as vault_file:
                 for chunk in chunks:
-                    vault_file.write(chunk.strip() + "\n")
+                    await vault_file.write(chunk.strip() + "\n")
             print(f"PDF content appended to vault.txt with each chunk on a separate line.")
 
-def upload_txtfile():
+async def upload_txtfile():
     file_path = filedialog.askopenfilename(filetypes=[("Text Files", "*.txt")])
     if file_path:
-        with open(file_path, 'r', encoding="utf-8") as txt_file:
-            text = txt_file.read()
+        async with aiofiles.open(file_path, 'r', encoding="utf-8") as txt_file:
+            text = await txt_file.read()
             
             # Normalize whitespace and clean up text
             text = re.sub(r'\s+', ' ', text).strip()
@@ -302,15 +304,15 @@ def upload_txtfile():
                     current_chunk = sentence + " "
             if current_chunk:
                 chunks.append(current_chunk)
-            with open("vault.txt", "a", encoding="utf-8") as vault_file:
+            async with aiofiles.open("vault.txt", "a", encoding="utf-8") as vault_file:
                 for chunk in chunks:
-                    vault_file.write(chunk.strip() + "\n")
+                    await vault_file.write(chunk.strip() + "\n")
             print(f"Text file content appended to vault.txt with each chunk on a separate line.")
 
-def upload_jsonfile():
+async def upload_jsonfile():
     file_path = filedialog.askopenfilename(filetypes=[("JSON Files", "*.json")])
     if file_path:
-        with open(file_path, 'r', encoding="utf-8") as json_file:
+        async with aiofiles.open(file_path, 'r', encoding="utf-8") as json_file:
             data = json.load(json_file)
             
             # Flatten the JSON data into a single string
@@ -331,9 +333,9 @@ def upload_jsonfile():
                     current_chunk = sentence + " "
             if current_chunk:
                 chunks.append(current_chunk)
-            with open("vault.txt", "a", encoding="utf-8") as vault_file:
+            async with aiofiles.open("vault.txt", "a", encoding="utf-8") as vault_file:
                 for chunk in chunks:
-                    vault_file.write(chunk.strip() + "\n")
+                    await vault_file.write(chunk.strip() + "\n")
             print(f"JSON file content appended to vault.txt with each chunk on a separate line.")
 
 # Create the main window for file upload
@@ -341,13 +343,13 @@ root = Tk()
 root.title("Upload .pdf, .txt, or .json")
 
 # Create buttons for uploading files
-pdf_button = Button(root, text="Upload PDF", command=convert_pdf_to_text)
+pdf_button = Button(root, text="Upload PDF", command=lambda: asyncio.run(convert_pdf_to_text()))
 pdf_button.pack(pady=10)
 
-txt_button = Button(root, text="Upload Text File", command=upload_txtfile)
+txt_button = Button(root, text="Upload Text File", command=lambda: asyncio.run(upload_txtfile()))
 txt_button.pack(pady=10)
 
-json_button = Button(root, text="Upload JSON File", command=upload_jsonfile)
+json_button = Button(root, text="Upload JSON File", command=lambda: asyncio.run(upload_jsonfile()))
 json_button.pack(pady=10)
 
 # Run the main event loop
