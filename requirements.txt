@@ -6,3 +6,8 @@ pyyaml
 beautifulsoup4
 lxml
 python-dotenv
+sentencepiece 
+sentence-transformers 
+transformers 
+faiss-cpu 
+nltk
