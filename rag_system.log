@@ -69,3 +69,12 @@ The Naval Signal Simulation model can be used to simulate the transmission and r
 
 The Naval Signal Simulation model is a useful tool for training naval personnel in the use of standardized signals. This guide has provided an overview of the principles of the system, including the use of pennant flags, numeral pennants, and spoken commands. The simulation can be used to practice transmitting and receiving naval signals, and can help improve communication and coordination among naval units.
 2024-07-26 10:46:34,015 - INFO - User Feedback: unclear response ()
+2024-07-26 11:13:22,035 - INFO - Use pytorch device_name: mps
+2024-07-26 11:13:22,035 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 11:14:27,036 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 11:14:27,225 - INFO - User Query: start simulation
+2024-07-26 11:14:27,225 - INFO - Response: Simulation started!
+
+I'll be playing the role of a naval signal simulation model, and I will respond to your inputs as if I were a real-world naval signaling system.
+
+To start, I need some context. What kind of scenario would you like to simulate? Would you like to simulate a specific type of naval operation (e.g., convoy escort, search and rescue), or do you have a specific goal in mind (e.g., navigating through a minefield)? Let me know, and I'll help facilitate the simulation!
