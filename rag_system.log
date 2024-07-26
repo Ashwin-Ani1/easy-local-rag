@@ -78,3 +78,46 @@ The Naval Signal Simulation model is a useful tool for training naval personnel 
 I'll be playing the role of a naval signal simulation model, and I will respond to your inputs as if I were a real-world naval signaling system.
 
 To start, I need some context. What kind of scenario would you like to simulate? Would you like to simulate a specific type of naval operation (e.g., convoy escort, search and rescue), or do you have a specific goal in mind (e.g., navigating through a minefield)? Let me know, and I'll help facilitate the simulation!
+2024-07-26 12:21:26,679 - INFO - Use pytorch device_name: mps
+2024-07-26 12:21:26,679 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 12:22:29,846 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 12:22:29,927 - INFO - User Query: start simulation
+2024-07-26 12:22:29,927 - INFO - Response: Simulation Started!
+
+I'll start interpreting the signals and commands in this naval signal simulation. Please let me know what specific action you'd like me to take.
+
+The simulation is using the NATO Unclassified Air Traffic Publication, Volume II (ATP-01, Vol. II), Edition G, Version 1.
+
+To get started, I need to understand the format of the signals and commands. The simulation appears to use a combination of numerical and alphabetical codes, with some specific flags and pennants used to convey information.
+
+Some examples of code sequences:
+
+* NA 36 27-6: Indicates an execution signal.
+* Corpen V 7-7: Cease zigzagging and remain course steered.
+* Turn X 6-4: Convoy carrying out a zigzag plan.
+* Screen Ship carry Independent Zigzag: (Turn H 6-3) Speed changed.
+
+I'll continue to interpret the signals and commands as we progress through the simulation. Please let me know what specific actions you'd like me to take or what scenarios you'd like to simulate.
+2024-07-26 12:23:04,165 - INFO - Use pytorch device_name: mps
+2024-07-26 12:23:04,165 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 12:23:48,986 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 12:23:49,010 - INFO - User Query: start simulation
+2024-07-26 12:23:49,010 - INFO - Response: Simulation started.
+
+Please note that the simulation is based on a naval signal guide, and it may not reflect real-world scenarios or protocols. The simulation will use the terminology and abbreviations presented in the guide to simulate a naval communication scenario.
+
+**Current Situation:**
+
+* **Location:** Not specified
+* **Force:** Not specified
+* **Speed:** Not specified
+* **Course:** Not specified
+
+**Last Message Received:**
+None
+
+**Current Task:**
+None
+
+What would you like to do?
+2024-07-26 12:25:02,575 - INFO - User Feedback: yes

@@ -1,6 +1,7 @@
-import torch
-import ollama
 import os
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+import torch
 import json
 import faiss
 import re
@@ -63,7 +64,7 @@ def create_faiss_index(docs):
     return index, embeddings
 
 # Function to get relevant context from vault
-def get_relevant_context(rewritten_input, faiss_index, vault_content, top_k=3):
+def get_relevant_context(rewritten_input, faiss_index, vault_content, top_k=1):  # Lower top_k for more precise context
     input_embedding = embedding_model.encode([rewritten_input], convert_to_tensor=True)
     _, indices = faiss_index.search(input_embedding.cpu().numpy(), top_k)
     relevant_context = [vault_content[idx] for idx in indices[0]]
@@ -76,7 +77,7 @@ def rewrite_query(user_input_json, conversation_history):
     input_text = f"rewrite: {user_input} context: {context}"
     input_ids = t5_tokenizer.encode(input_text, return_tensors='pt')
     outputs = t5_model.generate(input_ids, max_length=100, num_return_sequences=1)
-    rewritten_query = t5_tokenizer.decode(outputs[0], skip_special_tokens=True)
+    rewritten_query = t5_tokenizer.decode(outputs[0], skip_special_tokens=True).strip()
     return json.dumps({"Rewritten Query": rewritten_query})
 
 # Function to log queries and responses
@@ -91,6 +92,14 @@ def get_user_feedback():
         logging.info(f"User Feedback: {feedback}")
     else:
         logging.info(f"User Feedback: unclear response ({feedback})")
+
+# Function to rank context based on similarity to the rewritten query
+def rank_context(rewritten_input, context_chunks):
+    input_embedding = embedding_model.encode([rewritten_input], convert_to_tensor=True)
+    chunk_embeddings = embedding_model.encode(context_chunks, convert_to_tensor=True)
+    similarities = (input_embedding @ chunk_embeddings.T).cpu().numpy()
+    ranked_chunks = [context_chunks[idx] for idx in similarities.argsort()[0][::-1]]
+    return ranked_chunks
 
 # Function to interact with Ollama model
 def ollama_chat(user_input, system_message, faiss_index, vault_content, ollama_model, conversation_history):
@@ -112,7 +121,9 @@ def ollama_chat(user_input, system_message, faiss_index, vault_content, ollama_m
         
         relevant_context = get_relevant_context(rewritten_query, faiss_index, vault_content)
         if relevant_context:
-            context_str = "\n".join(relevant_context)
+            # Rank the retrieved context to pull the most relevant piece
+            ranked_context = rank_context(rewritten_query, relevant_context)
+            context_str = "\n".join(ranked_context)
             print("Context Pulled from Documents: \n\n" + CYAN + context_str + RESET_COLOR)
         else:
             print(CYAN + "No relevant context found." + RESET_COLOR)
@@ -255,7 +266,7 @@ def convert_pdf_to_text():
             chunks = []
             current_chunk = ""
             for sentence in sentences:
-                if len(current_chunk) + len(sentence) + 1 < 1000:
+                if len(current_chunk) + len(sentence) + 1 < 500:  # Reduce chunk size to 500 characters
                     current_chunk += (sentence + " ").strip()
                 else:
                     chunks.append(current_chunk)
@@ -281,7 +292,7 @@ def upload_txtfile():
             chunks = []
             current_chunk = ""
             for sentence in sentences:
-                if len(current_chunk) + len(sentence) + 1 < 1000:
+                if len(current_chunk) + len(sentence) + 1 < 500:  # Reduce chunk size to 500 characters
                     current_chunk += (sentence + " ").strip()
                 else:
                     chunks.append(current_chunk)
@@ -310,7 +321,7 @@ def upload_jsonfile():
             chunks = []
             current_chunk = ""
             for sentence in sentences:
-                if len(current_chunk) + len(sentence) + 1 < 1000:
+                if len(current_chunk) + len(sentence) + 1 < 500:  # Reduce chunk size to 500 characters
                     current_chunk += (sentence + " ").strip()
                 else:
                     chunks.append(current_chunk)
