@@ -4,6 +4,7 @@ from tkinter import filedialog
 import PyPDF2
 import re
 import json
+from concurrent.futures import ThreadPoolExecutor
 
 # Function to convert PDF to text and append to vault.txt
 def convert_pdf_to_text():

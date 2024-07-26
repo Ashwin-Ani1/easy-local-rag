@@ -1,6 +1,4 @@
 import os
-os.environ["TOKENIZERS_PARALLELISM"] = "false"
-
 import torch
 import json
 import faiss
@@ -15,6 +13,10 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from tkinter import Tk, Button, filedialog
 import PyPDF2
+from concurrent.futures import ThreadPoolExecutor
+
+# Disable parallelism in tokenizers to avoid warnings and potential deadlocks
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
 # Download NLTK resources if not already downloaded
 nltk.download('stopwords')
@@ -53,10 +55,11 @@ def load_vault_content(filepath):
         content = file.read()
     return preprocess_text(content).split("\n")  # Split by lines to treat each line as a document
 
-# Function to create FAISS index
+# Function to create FAISS index with parallel processing
 def create_faiss_index(docs):
-    embeddings = embedding_model.encode(docs, convert_to_tensor=True)
-    print("Embeddings shape:", embeddings.shape)  # Print embeddings shape for debugging
+    with ThreadPoolExecutor() as executor:
+        embeddings = list(executor.map(lambda doc: embedding_model.encode(doc, convert_to_tensor=True), docs))
+    embeddings = torch.stack(embeddings)
     if len(embeddings.shape) == 1:  # Handle single document scenario
         embeddings = embeddings.unsqueeze(0)
     index = faiss.IndexFlatL2(embeddings.shape[1])

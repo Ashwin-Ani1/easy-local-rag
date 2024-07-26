@@ -121,3 +121,136 @@ None
 
 What would you like to do?
 2024-07-26 12:25:02,575 - INFO - User Feedback: yes
+2024-07-26 12:47:26,534 - INFO - Use pytorch device_name: mps
+2024-07-26 12:47:26,534 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 12:48:27,063 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 12:48:27,157 - INFO - User Query: start simulation
+2024-07-26 12:48:27,157 - INFO - Response: I'm starting the simulation!
+
+**Initial Conditions:**
+
+* Date: January 2016
+* Edition: G, Volume II
+* Version: 1 (NATO Unclassified)
+* Effective Page: Index-110 (LEP-1 Edition)
+
+**Simulation Starting...**
+
+The simulation will now start processing the naval signal flags and codes provided. Please wait while I translate and decode the signals.
+
+**First Signal: "NA" (36-27-6)**
+
+Translated: Leave harbor, zero time!
+
+**Next Signal: "ZIGZAG (GING)" (18-6)**
+
+Translated: Alter course, wheeling; resume zigzagging!
+
+Please stand by while I process more signals...
+2024-07-26 12:48:49,083 - INFO - User Feedback: yes
+2024-07-26 12:50:50,223 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 12:50:50,252 - INFO - User Query: whats next
+2024-07-26 12:50:50,253 - INFO - Response: **Detailed Guide for AI Model: Naval Signal Simulation**
+
+This guide provides a comprehensive overview of naval signal simulation, specifically focused on the Naval Signal Flag System used by NATO.
+
+**Introduction**
+
+The Naval Signal Flag System is a standardized system used by NATO to communicate maritime signals between ships, aircraft, and shore-based stations. The system employs flags and pennants to convey specific messages and orders, ensuring safe and efficient communication at sea.
+
+**Signal Patterns and Meanings**
+
+The guide explains the different signal patterns, including:
+
+1. **Port and Starboard**: Used to indicate direction or position (e.g., port side is "nekops").
+2. **Screen Speed**: Indicates the speed of a screen formation (e.g., speed 8-5 means 8 knots).
+3. **Course**: Specifies the course or heading of a ship or aircraft (e.g., turn z 6-4 means change course to z degrees and resume previous zigzag pattern).
+4. **Force**: Used to indicate the strength or composition of a naval force (e.g., "aa7" represents an Anti-Aircraft Force).
+
+**Pennant Flags and Meanings**
+
+The guide lists various pennant flags, including:
+
+1. **Numerical Pennants**: Represent numerical values (0-9).
+2. **Special Flag Pennants**: Indicate specific messages or orders (e.g., "zero" signifies a negative response).
+3. **Tack Line**: Used to convey specific information about course changes or maneuvers.
+
+**Code and Answer Code**
+
+The guide provides the code and answer code for each signal pattern, ensuring accurate interpretation of naval signals.
+
+**Effective Pages and Editions**
+
+This guide is based on the NATO Unclassified ATP-01, Volume II, Lep-1 Edition (G), Version 1. The effective pages range from 1-110, with each page presenting a specific signal pattern or meaning.
+
+**Conclusion**
+
+This detailed guide provides AI models with a comprehensive understanding of the Naval Signal Flag System used by NATO. By mastering this system, AI models can accurately interpret and generate naval signals, enabling efficient communication at sea.
+2024-07-26 12:51:10,406 - INFO - User Feedback: no
+2024-07-26 12:56:38,475 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 12:57:09,299 - INFO - Use pytorch device_name: mps
+2024-07-26 12:57:09,299 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-26 12:58:14,340 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 12:58:14,398 - INFO - User Query: start simulation
+2024-07-26 12:58:14,399 - INFO - Response: **Simulation Start**
+
+I will simulate a naval signal using the provided guide. Please note that this simulation is based on NATO's Naval Signal Guide, ATP-01, Vol. II.
+
+To begin, I need to understand the context of the simulation. Can you please specify what type of scenario or situation you would like me to simulate? For example, are we simulating a convoy operation, an aircraft carrier operation, or something else?
+
+Once I have a better understanding of the context, I will start generating naval signals using the provided guide.
+
+Please respond with your scenario or situation, and I'll get started!
+2024-07-26 12:58:43,536 - INFO - User Feedback: yes
+2024-07-26 12:59:58,984 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-26 12:59:59,028 - INFO - User Query: we are sailing forward
+2024-07-26 12:59:59,028 - INFO - Response: **Detailed Guide for AI Model: Naval Signal Simulation**
+
+**Introduction**
+This guide is designed to facilitate the simulation of naval signals in a digital environment. The primary purpose is to enable AI models to generate and decode naval signal messages, facilitating improved communication between naval vessels.
+
+**Signal Formats**
+The following signal formats will be used in this guide:
+
+1. Pennant Signals: These are visual signals conveyed through flags or pennants.
+2. Written Signals: These are written messages transmitted via radio or other means.
+3. Spoken Signals: These are verbal communications transmitted through radio or other means.
+
+**Signal Codes**
+The following signal codes will be used in this guide:
+
+1. Pennant Code: A numerical system representing the pennants displayed on a ship's mast (e.g., "12" for 2 pennants).
+2. Written Code: A substitution cipher used to encode written messages (e.g., substituting letters with numbers).
+
+**Signal Meanings**
+The following signal meanings will be used in this guide:
+
+1. Pennant Signals:
+	* Single Pennant: Indicates a single ship or unit.
+	* Multiple Pennants: Indicates multiple ships or units.
+2. Written Signals:
+	* Emergenc y : Indicates an emergency situation.
+	* Preparative : Indicates preparation for an action.
+	* Interrogative : Indicates asking for information.
+3. Spoken Signals:
+	* "Report": Requests information on the location of other vessels.
+
+**Signal Examples**
+Here are some examples of naval signals:
+
+1. Pennant Signal: "34" (indicating 3 pennants).
+2. Written Signal: "EMERGENCY - PREPARE TO ENGAGE ENEMY".
+3. Spoken Signal: "REPORT THE LOCATION OF FRIENDLY VESSELS".
+
+**Index**
+This guide is organized into a comprehensive index, featuring:
+
+1. Pennant Signals (NEKOPS, NITTIRW, etc.)
+2. Written Codes
+3. Spoken Signals
+
+**Purpose**
+The primary purpose of this guide is to facilitate the simulation of naval signals in a digital environment. This will enable AI models to generate and decode naval signal messages, improving communication between naval vessels.
+
+**Disclaimer**
+This guide is based on NATO Unclassified material (ATP-01, Vol. II) and is intended for educational purposes only.
