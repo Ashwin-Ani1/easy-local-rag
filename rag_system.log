@@ -121,3 +121,26 @@ None
 
 What would you like to do?
 2024-07-26 12:25:02,575 - INFO - User Feedback: yes
+2024-07-30 11:57:45,159 - INFO - Use pytorch device_name: mps
+2024-07-30 11:57:45,160 - INFO - Load pretrained SentenceTransformer: paraphrase-MiniLM-L6-v2
+2024-07-30 12:01:35,264 - INFO - HTTP Request: POST http://localhost:11434/v1/chat/completions "HTTP/1.1 200 OK"
+2024-07-30 12:01:35,544 - INFO - User Query: start simulation
+2024-07-30 12:01:35,547 - INFO - Response: Let's start the simulation.
+
+**Simulation Started**
+
+You are the commander of a naval vessel. You receive a signal indicating an execution signal with a specific course and speed.
+
+Signal: **NA 36 27-6**
+
+This signal indicates to leave harbor at zero time, proceed in a zigzag pattern (Ging), alter course wheeling, and then resume zigzagging.
+
+What do you want to do?
+
+1. Follow the signal and execute the course change.
+2. Query further information about the signal.
+3. Request confirmation of the signal before executing the course change.
+4. Ignore the signal and continue with your previous plan.
+
+Please respond with one of the above options (1-4).
+2024-07-30 12:02:05,956 - INFO - User Feedback: yes
